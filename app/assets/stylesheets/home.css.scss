@@ -1,0 +1,28 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.canvas-container {
+  width:900px; 
+	height:400px;
+  margin:0 auto;
+  border:1px solid #555;
+	position:relative;
+	background:#333;
+}
+
+div.canvas-container canvas {
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+
+div.canvas-container + a {
+	display:block;
+	width:400px;
+	text-align:center;
+	margin:10px auto 0px;
+	padding:6px 0px 5px;
+	background:#444;
+	border:1px solid #222;
+}

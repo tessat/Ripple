@@ -1,0 +1,17 @@
+<div class="header">
+  <div class="right">
+    <% if current_user %>
+      Welcome, <%= current_user.name %>!
+      <%= link_to "Logout", logout_path %>
+    <% else %>
+      <%= link_to "Login with Foursquare", "/auth/foursquare" %>
+    <% end %>
+  </div>
+  
+  <h1>Ripple</h1>
+  <h2>what's your effect?</h2>
+  <div class="lines first"></div>
+  <div class="lines second"></div>
+  <div class="lines third"></div>
+
+</div>

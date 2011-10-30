@@ -1,0 +1,158 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree . 
+*/
+
+/****************
+General Styles 
+****************/
+
+body {
+	font-family:sans-serif;
+	background:#333;
+	color:#ccc;
+	margin:0px;
+	padding:0px;
+}
+
+h1 {
+	margin:3px 0px 5px;
+	
+}
+
+h2 {
+	
+}
+
+h3 {
+	
+}
+
+h4 {
+	
+}
+
+h5 {
+	
+}
+
+a, a:hover, a:visited {
+	text-decoration:none;
+	color:#ccc;
+}
+
+/****************
+General Classes
+****************/
+
+.left {
+	float:left;
+}
+
+.right {
+	float:right;
+}
+
+.hidden {
+	display:none;
+}
+
+/****************
+Header
+****************/
+
+div.header {
+	border-top:1px solid #222;
+	position:relative;
+	background: #333333 url('header-background.png');
+	padding:5px 10px;
+	margin:0 auto;
+	height:60px;
+}
+
+div.header h1 {
+	font-size:32px;
+	position:relative; 
+	z-index:1000;
+	margin-left:20px;
+	margin-top:15px;
+	margin-bottom:0px;
+	color:#eee;
+}
+
+div.header h2 {
+	margin-top:0;
+	margin-left:25px;
+	font-weight:normal;
+	font-size:16px;
+}
+
+div.header img {
+	position:absolute;
+	top:-15px;
+	left:-9px;
+	opacity:0.1; 
+	-moz-opacity:0.1; 
+	filter:alpha(opacity=10);
+}
+
+div.header div.lines {
+	position:absolute;
+	opacity:0.2; 
+	-moz-opacity:0.2; 
+	filter:alpha(opacity=20);
+	width:96%; 
+	height:2px; 
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border-radius:20px;
+}
+
+div.header div.lines.first {
+	background:#eee; 
+	top:22px; 
+	left:0px
+}
+
+div.header div.lines.second {
+	background:#aaa; 
+	top:31px; 
+	left:15px;
+	height:3px;
+}
+
+div.header div.lines.third {
+	background:#eee; 
+	top:45px; 
+	right:0px;	
+}
+
+/****************
+Footer
+****************/
+
+div.footer {
+	background:#444;
+	height:40px;
+	width:auto;
+	padding:10px;
+	border-top:1px solid #777;
+	border-bottom:4px solid #222;
+}
+
+/****************
+Content
+****************/
+
+div.content {
+	border-top:2px solid #444;
+	border-bottom:1px solid #444;
+	padding:12px 15px;
+	width:1000px;
+	margin:10px auto;
+	min-height:200px;
+}
+
