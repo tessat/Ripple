@@ -5,9 +5,7 @@ gem 'rails', '3.1.0'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-# gem 'sqlite3'
 gem 'mysql'
-gem 'mysql2'
 
 gem 'json'
 
@@ -30,5 +28,5 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-gem 'ruby-debug19'
+# gem 'ruby-debug19'
 
