@@ -39,7 +39,7 @@ gem 'omniauth'
 gem 'jquery-rails'
 
 # foursquare
-gem 'typhoeus'
+gem 'typhoeus', "< 0.3.0"
 gem 'quimby'
 
 # Use unicorn as the web server
