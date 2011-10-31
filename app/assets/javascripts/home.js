@@ -392,6 +392,9 @@ function drawExpandingRing(canvas_id, ring, intersect_points) {
 
 function drawSimpleDot(canvas_id, dot) {
 	dot.radius = dot.radius - 6
+	if (dot.radius <= 0) {
+		dot.radius = 1;
+	}
 	$("canvas#"+canvas_id).drawArc(dot);
 }
 
