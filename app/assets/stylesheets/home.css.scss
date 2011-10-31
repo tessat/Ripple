@@ -11,6 +11,13 @@ div.canvas-container {
 	background:#333;
 }
 
+div.canvas-container div.empty {
+	width:100%;
+	padding-top:140px;
+	text-align:center;
+	font-size:22px;
+}
+
 div.canvas-container canvas {
 	position:absolute;
 	top:0px;
@@ -25,4 +32,15 @@ div.canvas-container + a {
 	padding:6px 0px 5px;
 	background:#444;
 	border:1px solid #222;
+}
+
+div.cta {
+	width:900px; 
+	margin:15px auto 0px; 
+	text-align:center; 
+	font-size:20px;
+}
+
+div.cta a {
+	text-decoration:underline;
 }

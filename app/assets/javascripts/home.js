@@ -9,14 +9,104 @@
 // Events
 // ***************
 
-// On load
-
-$('document').ready(function() {
-	
+// On "load"
+$('.canvas-container').live('doAnimation', function() {
+	if (loggedIn) {
+		runCheckinAnimation();
+	} else {
+		runSampleAnimation();
+	}
 });
 
+// On animation button trigger
 $('a.run-animation').live('click', function() {
-	
+	$('.canvas-container').trigger('doAnimation');
+	return false;
+});
+
+
+// ***************
+// Functions
+// ***************
+
+function runCheckinAnimation() {
+	// Get foursquare friends
+	getFriends(function(friends) {
+		// Compile the relevant data points
+		var friends_checkins = [];
+		$.each(friends, function(index, friend) {
+			if (friend.last_checkin) {
+				var friend_checkin = {
+					x: friend.last_checkin.json.venue.location.lng,
+					y: friend.last_checkin.json.venue.location.lat
+				};
+				friends_checkins.push(friend_checkin); 
+			}
+		});
+		// Get checkins
+		getCheckins(function(checkins) {
+			// Center at the first checkin location
+			var offset = {
+				x: (600 - checkins[0].json.venue.location.lng),
+				y: (100 - checkins[0].json.venue.location.lat)
+			};
+			var scale = {
+				x: 0,
+				y: 0,
+				width: 4,
+				height: 4
+			};
+			// Go through each checkin and animate
+			$.each(checkins, function(index, checkin) {
+				// Get the checkin point
+				var point = {
+					x: checkin.json.venue.location.lng, 
+					y: checkin.json.venue.location.lat
+				};
+				// Figure and set the timeout for a delayed effect
+				var timeout = Math.exp(index)*1000;
+				setTimeout(function() {
+					// Draw
+					drawCompleteFx(point, friends_checkins, offset, scale);
+				}, timeout);
+			});
+		});
+	});
+}
+
+function getCheckins(callback) {
+	callback = callback || $.noop;
+	$.ajax({
+		url: "/users/checkins",
+		data: {},
+		type: 'GET',
+		dataType: 'json',
+		success: function(json) {
+			callback(json);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+		},
+	});
+}
+
+function getFriends(callback) {
+	callback = callback || $.noop;
+	$.ajax({
+		url: "/users/friends",
+		data: {},
+		type: 'GET',
+		dataType: 'json',
+		success: function(json) {
+			callback(json);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+		},
+	});
+}
+
+function runSampleAnimation() {
 	var center_point = {x: 100, y: 200};
 	var fx_points = [
 		{x: 120, y: 220},
@@ -108,16 +198,15 @@ $('a.run-animation').live('click', function() {
 		];
 		drawCompleteFx(center_point, fx_points);
 	}, 30000);
+}
+
+function drawCompleteFx(center_point, intersect_points, offset, scale) {
+	offset = offset || {x: 0, y: 0};
+	scale = scale || {x: 0, y: 0, width:1, height:1};
 	
-	return false;
-});
+	// Remove the empty spinner
+	$('div.canvas-container div.empty').remove();
 
-
-// ***************
-// Functions
-// ***************
-
-function drawCompleteFx(center_point, intersect_points) {
 	// Create the canvas
 	var canvas_id = new Date().getTime();
 	var z_index		= 0;
@@ -130,6 +219,10 @@ function drawCompleteFx(center_point, intersect_points) {
 	z_index++;
 	$('div.canvas-container').prepend('<canvas id="'+canvas_id+'" width="900px" height="400px" style="z-index:'+z_index+';"></canvas>');
 	
+	// Center the canvas to an offset point
+	$('#'+canvas_id).translateCanvas(offset);
+	$('#'+canvas_id).scaleCanvas(scale);
+	
 	// Calculate distances
 	for(i=0; i<intersect_points.length;i++) {
 		intersect_points[i]['distance'] = distance(center_point, intersect_points[i]);
@@ -137,8 +230,9 @@ function drawCompleteFx(center_point, intersect_points) {
 	// Draw stuff
 	var i = 1;
 	recursiveFn(canvas_id, center_point, intersect_points, i, function() {
-		$("canvas#"+canvas_id).fadeOut(10000);
-		// todo remove canvas
+		$("canvas#"+canvas_id).fadeOut(8000, function() {
+			$("canvas#"+canvas_id).remove();
+		});
 	});
 
 }
@@ -160,7 +254,12 @@ function recursiveFn(canvas_id, center_point, intersect_points, i, callback) {
 
 
 function drawSystem(canvas_id, center_point, intersect_points, mul) {
-	$("canvas#"+canvas_id).clearCanvas();
+	$("canvas#"+canvas_id).clearCanvas({
+		x: 0,
+		y: 0,
+		width:2000,
+		height:1000
+	});
 	var rad = mul;
 	
 	// center dot
@@ -283,7 +382,7 @@ function drawExpandingRing(canvas_id, ring, intersect_points) {
 					fillStyle: "#666",
 					x: intersect_points[i]['x'],
 					y: intersect_points[i]['y'],
-					radius: 4
+					radius: 7
 				}
 				drawSimpleDot(canvas_id, dot);
 			}
@@ -292,6 +391,7 @@ function drawExpandingRing(canvas_id, ring, intersect_points) {
 }
 
 function drawSimpleDot(canvas_id, dot) {
+	dot.radius = dot.radius - 6
 	$("canvas#"+canvas_id).drawArc(dot);
 }
 
