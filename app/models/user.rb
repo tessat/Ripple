@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   class << self
     
     def find_or_create_with_omniauth(auth)
-      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || create_with_omniauth(auth)
       # Update user if necessary
       if ((user.name != auth["user_info"]["name"]) || (user.access_token != auth["credentials"]["token"]))
         user.name = auth["user_info"]["name"]
